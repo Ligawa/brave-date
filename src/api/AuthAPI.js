@@ -57,9 +57,7 @@ export const JWTAuth = {
         axUrlEncoded
           .post(
             `${Server.endpoint}/auth/login`,
-            JSON.stringify(
-              `grant_type=&username=${email}&password=${password}&scope=&client_id=&client_secret=`
-            )
+            { username: email, password }
           )
           .then(({ data }) => {
             if (data.access_token) {
