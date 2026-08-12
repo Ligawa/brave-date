@@ -89,9 +89,24 @@ export const getConversation = (receiver) => {
 export const sendTextMessage = (sender, receiver, message) => {
   return (dispatch) => {
     dispatch(fetchStart());
-    dispatch(sendChatMessage({ content: message, type: "text" }));
-    dispatch(sendNewChatMessage(message));
-    dispatch(fetchSuccess());
+    axJson.defaults.headers.common["Authorization"] =
+      "Bearer " + localStorage.getItem("token");
+    axJson
+      .post(`${Server.endpoint}/messages`, {
+        receiver_id: receiver.id || receiver.email,
+        content: message,
+        type: "text",
+      })
+      .then(({ data }) => {
+        if (data.status_code === 201) {
+          dispatch(sendChatMessage({ content: message, type: "text" }));
+          dispatch(sendNewChatMessage(message));
+          dispatch(fetchSuccess());
+        } else {
+          dispatch(fetchError(data.message || "Unable to send message."));
+        }
+      })
+      .catch(() => dispatch(fetchError("Unable to send message.")));
   };
 };
 
@@ -103,7 +118,24 @@ export const sendNewMediaMessage = (
 ) => {
   return (dispatch) => {
     dispatch(fetchStart());
-    dispatch(sendNewMessageMedia(fileContent, fileName, preview));
-    dispatch(fetchSuccess());
+    axJson.defaults.headers.common["Authorization"] =
+      "Bearer " + localStorage.getItem("token");
+    const [meta, base64] = String(fileContent).split(",");
+    const contentType = /data:(.*?);/.exec(meta)?.[1] || "image/jpeg";
+    axJson
+      .post(`${Server.endpoint}/messages`, {
+        receiver_id: receiverID,
+        content: base64,
+        type: "media",
+        media_pathname: fileName,
+        content_type: contentType,
+      })
+      .then(({ data }) => {
+        if (data.status_code === 201) {
+          dispatch(sendNewMessageMedia(fileContent, fileName, preview));
+          dispatch(fetchSuccess());
+        } else dispatch(fetchError(data.message || "Unable to send media."));
+      })
+      .catch(() => dispatch(fetchError("Unable to send media.")));
   };
 };

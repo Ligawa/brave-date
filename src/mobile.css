@@ -53,9 +53,14 @@
   .boost-overlay { position: fixed; inset: 0; z-index: 1300; display: grid; place-items: center; padding: 20px; background: rgba(39, 19, 27, .38); }
   .boost-panel { width: min(100%, 360px); display: flex; flex-direction: column; gap: 12px; padding: 24px; border-radius: 24px; background: #fff; }
   .explore-panel { padding: 18px 16px 110px; }
-  .explore-groups { display: grid; gap: 10px; margin-top: 16px; }
-  .explore-group { display: grid; gap: 4px; padding: 16px; border-radius: 18px; background: #fff; box-shadow: 0 4px 18px rgba(55,24,33,.08); }
-  .explore-group .MuiChip-root { justify-self: start; margin-top: 4px; }
+  .explore-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 18px; }
+  .explore-group { display: flex; flex-direction: column; min-width: 0; overflow: hidden; border: 1px solid #f0dfe2; border-radius: 18px; background: #fff; box-shadow: 0 8px 20px rgba(55,24,33,.08); cursor: pointer; transition: transform .2s ease, box-shadow .2s ease; }
+  .explore-group:active { transform: scale(.98); }
+  .explore-group-image { display: block; width: 100%; height: 112px; object-fit: cover; }
+  .explore-group-content { display: flex; flex: 1; flex-direction: column; gap: 6px; padding: 12px; }
+  .explore-group-content .MuiTypography-root:first-child { color: #3f2932; font-size: 14px; line-height: 1.15; }
+  .explore-group-content .MuiTypography-body2 { min-height: 38px; color: #806c74 !important; font-size: 11px; line-height: 1.35; }
+  .explore-group .MuiChip-root { align-self: flex-start; margin-top: auto; background: #fff0f3; color: #a51d43; font-size: 10px; font-weight: 800; }
   .in-build-app-container { padding-bottom: 82px; }
 
   /* Mobile discovery overrides legacy desktop positioning. */
