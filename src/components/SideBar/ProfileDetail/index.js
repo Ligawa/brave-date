@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { JWTAuth } from "../../../api/AuthAPI";
 import EditPersonalInformation from "../../EditInfo";
 import ResetPassword from "../../ResetPassword";
+import ProfileGallery from "../../ProfileGallery";
 import "../style.css";
 
 const ProfileDetail = ({
@@ -97,6 +98,7 @@ const ProfileDetail = ({
           <ListItemText className="text-color" primary={userStatus} />
         </ListItem>
       </List>
+      <ProfileGallery editable={Boolean(currentUser)} photos={user.profile_photos || user.photos || []} />
       <Typography className="profile-list-title">
         Personal Information
       </Typography>

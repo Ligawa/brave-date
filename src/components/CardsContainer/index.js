@@ -79,10 +79,11 @@ const CardsContainer = () => {
 
   return (
     <Box className="main-box-root">
-      <Box sx={{ display: "flex", justifyContent: "flex-end", px: 2, pt: 1 }}>
-        <Button startIcon={<TuneIcon />} onClick={() => setFiltersOpen((open) => !open)} sx={{ color: "#d6002f", textTransform: "none" }}>Filters</Button>
+      <Box className="discovery-toolbar">
+        <Typography className="discovery-kicker">Discover nearby people</Typography>
+        <Button className="filter-trigger" aria-label="Open filters" startIcon={<TuneIcon />} onClick={() => setFiltersOpen((open) => !open)}>Filters</Button>
       </Box>
-      {filtersOpen && <Box sx={{ mx: 2, p: 2, borderRadius: 2, backgroundColor: "#fff", boxShadow: "0 2px 12px rgba(0,0,0,.08)" }}>
+      {filtersOpen && <Box className="filter-sheet">
         <Typography variant="body2">Age range: {filters.min_age}–{filters.max_age}</Typography>
         <Slider value={[filters.min_age, filters.max_age]} min={18} max={80} onChange={(_, value) => setFilters((prev) => ({ ...prev, min_age: value[0], max_age: value[1] }))} valueLabelDisplay="auto" />
         <Select fullWidth size="small" value={filters.gender} onChange={(event) => setFilters((prev) => ({ ...prev, gender: event.target.value }))}>
@@ -118,9 +119,8 @@ const CardsContainer = () => {
                     fontSize: "30px",
                   }}
                 >
-                  {character.first_name}{" "}
-                  {character.birthday ? moment().diff(moment(character.birthday), "years") : ""}
-                  <Typography component="span" sx={{ display: "block", fontSize: 14 }}>{character.worldwide ? "Worldwide" : character.distance_km != null ? `${character.distance_km} km away` : ""}</Typography>
+                  <Typography className="profile-card-name" component="span">{character.first_name}{" "}{character.birthday ? moment().diff(moment(character.birthday), "years") : ""}</Typography>
+                  <Typography className="profile-card-meta" component="span">{character.worldwide ? "Worldwide discovery" : character.distance_km != null ? `${character.distance_km} km away` : "Nearby match"}</Typography>
                 </Box>
                 {currentDirection === "left" && currentIndex === index - 1 ? (
                   <Box
