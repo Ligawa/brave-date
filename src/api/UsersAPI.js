@@ -48,7 +48,7 @@ export const resetPassword = (
 };
 
 export const SetPersonalInfo = (
-  { firstName, lastName, passion, phoneNumber },
+  { firstName, lastName, passion, phoneNumber, flightMode },
   onCloseDialog
 ) => {
   return (dispatch) => {
@@ -64,6 +64,7 @@ export const SetPersonalInfo = (
             last_name: lastName,
             passion: passion,
             phone_number: phoneNumber,
+            flight_mode: flightMode,
           })
         )
         .then(({ data }) => {
@@ -74,6 +75,7 @@ export const SetPersonalInfo = (
             user.last_name = lastName;
             user.passion = passion;
             user.phone_number = phoneNumber;
+            user.flight_mode = flightMode;
             dispatch(setCurrentUser(user));
             dispatch(onCloseDialog());
             dispatch(

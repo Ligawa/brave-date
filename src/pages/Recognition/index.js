@@ -29,9 +29,14 @@ const Sidebar = () => {
     dispatch(onUserSelect(user));
   };
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(({ coords }) => dispatch(updateLocation(coords.latitude, coords.longitude)), undefined, { enableHighAccuracy: true, maximumAge: 300000 });
-    }
+    if (!navigator.geolocation) return undefined;
+    const watchId = navigator.geolocation.watchPosition(({ coords }) => {
+      dispatch(updateLocation(coords.latitude, coords.longitude));
+    }, undefined, { enableHighAccuracy: true, maximumAge: 60000, timeout: 15000 });
+    return () => navigator.geolocation.clearWatch(watchId);
+  }, [dispatch]);
+
+  useEffect(() => {
     if (value === 1) {
       dispatch(getUserMatches());
     }

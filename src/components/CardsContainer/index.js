@@ -120,6 +120,7 @@ const CardsContainer = () => {
                 >
                   {character.first_name}{" "}
                   {character.birthday ? moment().diff(moment(character.birthday), "years") : ""}
+                  <Typography component="span" sx={{ display: "block", fontSize: 14 }}>{character.worldwide ? "Worldwide" : character.distance_km != null ? `${character.distance_km} km away` : ""}</Typography>
                 </Box>
                 {currentDirection === "left" && currentIndex === index - 1 ? (
                   <Box

@@ -7,6 +7,9 @@ import AppTextInput from "../AppTextInput";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import { useDispatch } from "react-redux";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -26,6 +29,7 @@ const EditPersonalInformation = ({ open, onCloseDialog }) => {
     lastName: "",
     passion: "",
     phoneNumber: "",
+    flightMode: false,
   });
 
   const [errorValues, setErrorValues] = useState({
@@ -38,7 +42,7 @@ const EditPersonalInformation = ({ open, onCloseDialog }) => {
   const dispatch = useDispatch();
 
   const onSubmit = () => {
-    const { firstName, lastName, passion, phoneNumber } = personalInfoValues;
+    const { firstName, lastName, passion, phoneNumber, flightMode } = personalInfoValues;
 
     if (!firstName) {
       setErrorValues({
@@ -63,7 +67,7 @@ const EditPersonalInformation = ({ open, onCloseDialog }) => {
     } else {
       dispatch(
         SetPersonalInfo(
-          { firstName, lastName, passion, phoneNumber },
+          { firstName, lastName, passion, phoneNumber, flightMode },
           onCloseDialog
         )
       );
@@ -192,6 +196,10 @@ const EditPersonalInformation = ({ open, onCloseDialog }) => {
               />
             </Grid>
           </GridContainer>
+        </Box>
+        <Box sx={{ px: 2, py: 1, mb: 2, borderRadius: 2, backgroundColor: "#fff5f7" }}>
+          <FormControlLabel control={<Switch checked={personalInfoValues.flightMode} onChange={(event) => setPersonalInfoValues({ ...personalInfoValues, flightMode: event.target.checked })} color="primary" />} label="Flight mode" />
+          <Typography variant="caption" display="block">Show my profile worldwide. Your exact location is never displayed.</Typography>
         </Box>
         <Box display="flex" justifyContent="flex-end" mb={0}>
           <Button onClick={onCloseDialog} color="secondary">
