@@ -324,7 +324,7 @@ const OnBoarding = () => {
                 >
                   Gender
                 </FormLabel>
-                <RadioGroup row name="position" defaultValue="top">
+                <RadioGroup row name="gender" value={personelInfo.gender} onChange={handleChange}>
                   <FormControlLabel
                     id="man-gender-identity"
                     name="gender"
@@ -344,7 +344,7 @@ const OnBoarding = () => {
                     }}
                     onChange={handleChange}
                     checked={personelInfo.gender === "man"}
-                    control={<Radio sx={{ display: "none" }} />}
+                    control={<Radio sx={{ color: "#d6002f", "&.Mui-checked": { color: "#d6002f" } }} />}
                     label="Man"
                     labelPlacement="end"
                   />
@@ -367,7 +367,7 @@ const OnBoarding = () => {
                       },
                     }}
                     checked={personelInfo.gender === "woman"}
-                    control={<Radio sx={{ display: "none" }} />}
+                    control={<Radio sx={{ color: "#d6002f", "&.Mui-checked": { color: "#d6002f" } }} />}
                     label="Woman"
                     labelPlacement="end"
                   />
@@ -389,8 +389,8 @@ const OnBoarding = () => {
                         border: "solid 1px #d6002f",
                       },
                     }}
-                    checked={personelInfo.gender === "other"}
-                    control={<Radio sx={{ display: "none" }} />}
+                    checked={personelInfo.gender === "more"}
+                    control={<Radio sx={{ color: "#d6002f", "&.Mui-checked": { color: "#d6002f" } }} />}
                     label="Other"
                     labelPlacement="end"
                   />
@@ -435,14 +435,14 @@ const OnBoarding = () => {
                 >
                   Show Me
                 </FormLabel>
-                <RadioGroup row name="position" defaultValue="top">
+                <RadioGroup row name="interests" value={personelInfo.interests} onChange={handleChange}>
                   <FormControlLabel
                     id="man-gender-interests"
                     name="interests"
                     value="man"
                     onChange={handleChange}
                     checked={personelInfo.interests === "man"}
-                    control={<Radio sx={{ display: "none" }} />}
+                    control={<Radio sx={{ color: "#d6002f", "&.Mui-checked": { color: "#d6002f" } }} />}
                     label="Man"
                     labelPlacement="end"
                     sx={{
@@ -465,7 +465,7 @@ const OnBoarding = () => {
                     value="woman"
                     onChange={handleChange}
                     checked={personelInfo.interests === "woman"}
-                    control={<Radio sx={{ display: "none" }} />}
+                    control={<Radio sx={{ color: "#d6002f", "&.Mui-checked": { color: "#d6002f" } }} />}
                     label="Woman"
                     labelPlacement="end"
                     sx={{
@@ -489,7 +489,7 @@ const OnBoarding = () => {
                     value="everyone"
                     onChange={handleChange}
                     checked={personelInfo.interests === "everyone"}
-                    control={<Radio sx={{ display: "none" }} />}
+                    control={<Radio sx={{ color: "#d6002f", "&.Mui-checked": { color: "#d6002f" } }} />}
                     label="Everyone"
                     labelPlacement="end"
                     sx={{
