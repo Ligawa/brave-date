@@ -2,12 +2,14 @@
 @media screen and (max-width: 600px) {
   body { overflow-x: hidden; }
   .landing-page { min-height: 100svh; height: auto; margin-bottom: 0; }
-  .header-div { height: 72px; padding-top: env(safe-area-inset-top); }
-  .brave-date-nav-div { margin: 0 16px; }
-  .brave-date-logo-a { width: 116px; }
-  .liebena-logo { width: 92px; height: 44px; }
-  .brave-date-nav-div .language-login-div { gap: 8px; }
-  .login-button { min-height: 44px; padding-inline: 18px; }
+  .header-div { position: relative; top: 0; z-index: 10; flex: 0 0 auto; align-self: stretch; height: calc(72px + env(safe-area-inset-top)); padding-top: env(safe-area-inset-top); }
+  .brave-date-logo-nav-div { height: 72px; min-height: 72px; }
+  .brave-date-nav-div { flex: 1 1 auto; min-width: 0; height: 56px; margin: 0 12px; }
+  .brave-date-logo-a { display: flex; align-items: center; flex: 0 1 auto; width: auto; max-width: 170px; min-width: 0; }
+  .liebena-logo { width: 132px; max-width: 100%; height: auto; max-height: 52px; object-fit: contain; object-position: left center; }
+  .brave-date-nav-div .language-login-div { flex: 0 0 auto; gap: 4px; margin-left: auto; }
+  .login-button { min-height: 44px; padding-inline: 8px; }
+  .login-button-a { max-width: 112px; }
   .login-button-a { min-height: 44px; padding-inline: 18px; font-size: 1rem; }
   .nav-ul { display: none; }
   .MuiDialog-paper { width: calc(100% - 24px) !important; max-width: none !important; margin: 12px !important; max-height: calc(100svh - 24px); }

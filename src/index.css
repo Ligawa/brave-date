@@ -31,7 +31,7 @@ body {
   width: 100%;
   height: 100%;
   isolation: isolate;
-  position: abslute;
+  position: relative;
   background-color: transparent;
   justify-content: center;
   align-items: center;
