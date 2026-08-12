@@ -65,13 +65,13 @@ export const setInitialUsers = () => {
   };
 };
 
-export const setSelectedMatch = (user) => {
+export const setSelectedMatch = (user, direction = "like") => {
   return (dispatch) => {
     dispatch(fetchStart());
     axJson.defaults.headers.common["Authorization"] =
       "Bearer " + localStorage.getItem("token");
     axJson
-      .post(`${Server.endpoint}/matches`, { match: user.email })
+      .post(`${Server.endpoint}/swipes`, { target_id: user.id, target_email: user.email, direction })
       .then(({ data }) => {
         if (data.status_code === 201) {
           dispatch(fetchSuccess());

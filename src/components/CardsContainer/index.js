@@ -45,7 +45,9 @@ const CardsContainer = () => {
     setTimeout(() => {
       setCurrentDirection("");
       if (direction === "right") {
-        dispatch(setSelectedMatch(db[index]));
+        dispatch(setSelectedMatch(db[index], "like"));
+      } else if (direction === "left") {
+        dispatch(setSelectedMatch(db[index], "pass"));
       }
     }, 1000);
   };

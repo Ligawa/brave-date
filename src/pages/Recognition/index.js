@@ -5,6 +5,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import MatchesList from "../../components/SideBar/MatchesList";
 import MessagesList from "../../components/SideBar/MessagesList";
+import LikesList from "../../components/LikesList";
 import MainContainer from "../../components/MainContainer";
 import { currentUser } from "../../redux/authReducer/selectors";
 import { chatList } from "../../redux/chatReducer/selectors";
@@ -53,6 +54,7 @@ const Sidebar = () => {
             },
           }}
         >
+          <Tab label="Likes" value={0} sx={{ textTransform: "none", fontSize: 16, fontWeight: "bold" }} />
           <Tab
             style={{
               textTransform: "none",
@@ -74,17 +76,10 @@ const Sidebar = () => {
             value={2}
           />
         </Tabs>
-        {value === 1 ? (
-          <MatchesList
-            currentUser={thisCurrentUser}
-            matches={currentMatches}
-            onMatchesSelect={onMatchUserSelect}
-          />
+        {value === 0 ? <LikesList onMatchesSelect={onMatchUserSelect} /> : value === 1 ? (
+          <MatchesList currentUser={thisCurrentUser} matches={currentMatches} onMatchesSelect={onMatchUserSelect} />
         ) : (
-          <MessagesList
-            messages={currentMessages}
-            onMessagesSelect={onMatchUserSelect}
-          />
+          <MessagesList messages={currentMessages} onMessagesSelect={onMatchUserSelect} />
         )}
       </Box>
       <MainContainer />
