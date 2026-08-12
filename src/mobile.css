@@ -1,7 +1,7 @@
 /* Mobile-first interaction and layout defaults */
 @media screen and (max-width: 600px) {
   body { overflow-x: hidden; }
-  .landing-page { min-height: 100svh; height: auto; margin-bottom: 0; }
+  .landing-page { min-height: 100svh; height: auto; margin-bottom: 0; justify-content: flex-start; align-items: stretch; }
   .header-div { position: relative; top: 0; z-index: 10; flex: 0 0 auto; align-self: stretch; height: calc(72px + env(safe-area-inset-top)); padding-top: env(safe-area-inset-top); }
   .brave-date-logo-nav-div { height: 72px; min-height: 72px; }
   .brave-date-nav-div { flex: 1 1 auto; min-width: 0; height: 56px; margin: 0 12px; }
