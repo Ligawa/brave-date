@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef } from "react";
-import { Box } from "@mui/material";
+import { Box, Button, MenuItem, Select, Slider, Typography } from "@mui/material";
+import TuneIcon from "@mui/icons-material/Tune";
 import TinderCard from "react-tinder-card";
 import ReplayIcon from "@mui/icons-material/Replay";
 import CloseIcon from "@mui/icons-material/Close";
@@ -8,7 +9,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import BoltIcon from "@mui/icons-material/Bolt";
 import { users } from "../../redux/matchReducer/selectors";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedMatch } from "../../api/MatchAPI";
+import { setInitialUsers, setSelectedMatch } from "../../api/MatchAPI";
 import moment from "moment";
 
 const CardsContainer = () => {
@@ -17,6 +18,12 @@ const CardsContainer = () => {
   const [currentIndex, setCurrentIndex] = useState(db.length - 1);
   const [, setLastDirection] = useState();
   const [currentDirection, setCurrentDirection] = useState();
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [filters, setFilters] = useState({ min_age: 18, max_age: 80, distance: 50, gender: "any" });
+  const applyFilters = () => {
+    dispatch(setInitialUsers(filters));
+    setFiltersOpen(false);
+  };
   // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex);
 
@@ -72,6 +79,19 @@ const CardsContainer = () => {
 
   return (
     <Box className="main-box-root">
+      <Box sx={{ display: "flex", justifyContent: "flex-end", px: 2, pt: 1 }}>
+        <Button startIcon={<TuneIcon />} onClick={() => setFiltersOpen((open) => !open)} sx={{ color: "#d6002f", textTransform: "none" }}>Filters</Button>
+      </Box>
+      {filtersOpen && <Box sx={{ mx: 2, p: 2, borderRadius: 2, backgroundColor: "#fff", boxShadow: "0 2px 12px rgba(0,0,0,.08)" }}>
+        <Typography variant="body2">Age range: {filters.min_age}–{filters.max_age}</Typography>
+        <Slider value={[filters.min_age, filters.max_age]} min={18} max={80} onChange={(_, value) => setFilters((prev) => ({ ...prev, min_age: value[0], max_age: value[1] }))} valueLabelDisplay="auto" />
+        <Select fullWidth size="small" value={filters.gender} onChange={(event) => setFilters((prev) => ({ ...prev, gender: event.target.value }))}>
+          <MenuItem value="any">Any gender</MenuItem><MenuItem value="man">Men</MenuItem><MenuItem value="woman">Women</MenuItem><MenuItem value="more">Other genders</MenuItem>
+        </Select>
+        <Typography variant="body2" sx={{ mt: 1 }}>Maximum distance: {filters.distance} km</Typography>
+        <Slider value={filters.distance} min={1} max={200} onChange={(_, value) => setFilters((prev) => ({ ...prev, distance: value }))} valueLabelDisplay="auto" />
+        <Button variant="contained" fullWidth onClick={applyFilters} sx={{ backgroundColor: "#d6002f", mt: 1 }}>Apply filters</Button>
+      </Box>}
       <Box mb={2}>
         <Box className="card-container">
           {db.map((character, index) => (

@@ -12,7 +12,7 @@ import { chatList } from "../../redux/chatReducer/selectors";
 import { onUserSelect } from "../../redux/chatReducer/actions";
 import { matches } from "../../redux/matchReducer/selectors";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserMatches } from "../../api/MatchAPI";
+import { getUserMatches, updateLocation } from "../../api/MatchAPI";
 import { getMessagesList } from "../../api/ChatAPI";
 
 const Sidebar = () => {
@@ -29,6 +29,9 @@ const Sidebar = () => {
     dispatch(onUserSelect(user));
   };
   useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(({ coords }) => dispatch(updateLocation(coords.latitude, coords.longitude)), undefined, { enableHighAccuracy: true, maximumAge: 300000 });
+    }
     if (value === 1) {
       dispatch(getUserMatches());
     }

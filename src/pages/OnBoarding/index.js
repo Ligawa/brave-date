@@ -114,11 +114,44 @@ const OnBoarding = () => {
     interests: "woman",
     profile_picture: "",
     passion: "",
+    latitude: null,
+    longitude: null,
   });
+  const [locationStatus, setLocationStatus] = useState("requesting");
+  const [locationError, setLocationError] = useState("");
+
+  const requestLocation = () => {
+    if (!navigator.geolocation) {
+      setLocationStatus("error");
+      setLocationError("Your browser does not support location access.");
+      return;
+    }
+    setLocationStatus("requesting");
+    setLocationError("");
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        setPersonelInfo((prev) => ({ ...prev, latitude: coords.latitude, longitude: coords.longitude }));
+        setLocationStatus("ready");
+      },
+      () => {
+        setLocationStatus("error");
+        setLocationError("Location access is required to discover nearby matches.");
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 300000 }
+    );
+  };
+
+  useEffect(() => {
+    requestLocation();
+  }, []);
 
   const handleSubmit = async (e) => {
     const userInfo = location.state;
     e.preventDefault();
+    if (locationStatus !== "ready") {
+      setLocationError("Please allow location access before creating your account.");
+      return;
+    }
     dispatch(
       JWTAuth.onRegister({
         personelInfo: {
@@ -590,12 +623,11 @@ const OnBoarding = () => {
                 }}
               />
 
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
+              <Box sx={{ display: "flex", flexDirection: "column", gap: "8px", alignItems: "center", justifyContent: "center" }}>
+                <Typography variant="body2" sx={{ textAlign: "center", color: locationStatus === "ready" ? "#2e7d32" : "#d6002f" }}>
+                  {locationStatus === "ready" ? "Location enabled for nearby discovery" : locationError || "Allow location access to continue"}
+                </Typography>
+                {locationStatus === "error" && <Button type="button" onClick={requestLocation}>Try location again</Button>}
                 <Button
                   type="submit"
                   sx={{
@@ -615,7 +647,8 @@ const OnBoarding = () => {
                     !personelInfo.first_name ||
                     !personelInfo.birthday ||
                     !personelInfo.profile_picture ||
-                    !personelInfo.passion
+                    !personelInfo.passion ||
+                    locationStatus !== "ready"
                   }
                 >
                   Continue
