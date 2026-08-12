@@ -57,7 +57,36 @@
   .explore-group { display: grid; gap: 4px; padding: 16px; border-radius: 18px; background: #fff; box-shadow: 0 4px 18px rgba(55,24,33,.08); }
   .explore-group .MuiChip-root { justify-self: start; margin-top: 4px; }
   .in-build-app-container { padding-bottom: 82px; }
+
+  /* Mobile discovery overrides legacy desktop positioning. */
+  .in-build-app-container { display: block !important; position: relative !important; width: 100vw !important; max-width: 100vw !important; min-height: 100svh !important; height: auto !important; margin: 0 !important; overflow-x: hidden !important; background: #fffaf8 !important; }
+  .in-build-app-sidebar { display: none !important; }
+  .in-build-app-container > .main-box-root { display: block !important; width: 100% !important; min-height: calc(100svh - 82px) !important; padding: 0 16px 28px !important; background: #fffaf8 !important; }
+  .main-box-root .discovery-toolbar { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 52px; padding: 10px 0 8px; }
+  .discovery-kicker { color: #6f5962; font-size: 13px !important; font-weight: 700 !important; letter-spacing: .01em; }
+  .filter-trigger { min-height: 38px !important; padding: 0 12px !important; border: 1px solid #ead7db !important; border-radius: 999px !important; background: #fff !important; color: #a51d43 !important; font-size: 12px !important; font-weight: 700 !important; box-shadow: 0 4px 12px rgba(117, 39, 61, .08); }
+  .filter-trigger .MuiButton-startIcon { margin-right: 4px; }
+  .main-box-root .filter-sheet { position: relative; z-index: 5; display: grid; gap: 10px; width: 100%; margin: 0 0 14px; padding: 16px; border: 1px solid #f0dfe2; border-radius: 18px; background: #fff; box-shadow: 0 10px 28px rgba(91, 42, 56, .1); }
+  .filter-sheet .MuiSlider-root { padding: 8px 0; color: #d92f58; }
+  .filter-sheet .MuiSelect-select { padding: 10px 12px; }
+  .main-box-root > .MuiBox-root:not(.discovery-toolbar):not(.filter-sheet) { margin-bottom: 0 !important; }
+  .card-container { position: relative !important; display: flex !important; justify-content: center !important; align-items: center !important; width: 100% !important; max-width: none !important; height: min(66svh, 540px) !important; min-height: 420px !important; margin: 0 !important; }
+  .swipe { position: absolute !important; inset: 0 !important; display: flex !important; justify-content: center !important; align-items: stretch !important; }
+  .card { position: relative !important; left: auto !important; top: auto !important; width: min(100%, 390px) !important; max-width: 390px !important; height: 100% !important; min-height: 0 !important; border-radius: 24px !important; box-shadow: 0 14px 34px rgba(68, 32, 42, .18) !important; overflow: hidden !important; }
+  .card > .MuiBox-root:first-of-type { left: 20px !important; bottom: 92px !important; margin: 0 !important; }
+  .profile-card-name { display: block; color: #fff; font-size: clamp(26px, 7vw, 34px); font-weight: 800; line-height: 1.05; text-shadow: 0 2px 12px rgba(0,0,0,.35); }
+  .profile-card-meta { display: block; margin-top: 6px; color: rgba(255,255,255,.9); font-size: 13px; font-weight: 600; }
+  .card-footer { bottom: 14px !important; width: calc(100% - 28px) !important; max-width: none !important; height: 64px !important; }
+  .card-footer-bottons { width: 100% !important; max-width: none !important; height: 76px !important; border-radius: 22px !important; }
+  .mobile-discovery-header { flex: 0 0 auto; margin: 0 -4px; padding: 8px 0 14px; background: transparent; }
+  .explore-panel { min-height: calc(100svh - 82px); padding: 16px 0 110px; background: #fffaf8; }
+  .profile-list-title { margin: 0 0 8px !important; padding: 14px 0 8px !important; color: #3d2931 !important; font-size: 22px !important; font-weight: 800 !important; }
+  .personal-list-root { display: grid; gap: 8px; padding: 0 !important; }
+  .personal-list-root .MuiListItem-root { min-height: 64px; padding: 10px 14px !important; border: 1px solid #f0e1e3; border-radius: 16px; background: #fff; box-shadow: 0 4px 14px rgba(91,42,56,.05); }
+  .personal-list-root .MuiListItemText-primary { color: #8b727b; font-size: 11px; font-weight: 700; }
+  .personal-list-root .MuiListItemText-secondary { margin-top: 2px; color: #34252b; font-size: 15px; font-weight: 700; overflow-wrap: anywhere; }
 }
+
 
 @media screen and (min-width: 601px) and (max-width: 960px) {
   .brave-date-nav-div { margin-inline: 20px; }
