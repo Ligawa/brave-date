@@ -1,4 +1,4 @@
-# Brave Date
+# Liebena
 
 <div align="center">
 
@@ -18,7 +18,7 @@
 
 </div>
 
-![Brave Date.](./docs/static/images/Banner.png)
+![Liebena.](./docs/static/images/Banner.png)
 
 ## Table of Contents
 
@@ -33,9 +33,9 @@
 
 ## Introduction
 
-**Brave Date** is a **fully featured** Tinder clone developed using open source tools from scratch. It's designed to become the ultimate Tinder clone. It is **user-friendly** with a clean interface that is easy to navigate.
+**Liebena** is a **fully featured** dating app clone developed using open source tools from scratch. It's designed to become the ultimate dating app clone. It is **user-friendly** with a clean interface that is easy to navigate.
 
-As well as being **feature-rich**, **Brave Date** is also **fully responsive**, meaning it will work seamlessly on a wide range of devices. So whether you're dating on your desktop or your mobile, you'll always have a great experience.
+As well as being **feature-rich**, **Liebena** is also **fully responsive**, meaning it will work seamlessly on a wide range of devices. So whether you're dating on your desktop or your mobile, you'll always have a great experience.
 
 ## Supported Features
 
@@ -47,9 +47,9 @@ As well as being **feature-rich**, **Brave Date** is also **fully responsive**, 
     
 ![OnBoarding Page.](./docs/static/images/onboarding-page.png)
     
-* Tinder Cards.
+* dating app Cards.
     
-![Tinder Cards.](./docs/static/images/tinder-cards.png)
+![dating app Cards.](./docs/static/images/tinder-cards.png)
 
 * Keyboard shortcuts.
     

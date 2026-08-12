@@ -93,8 +93,8 @@ const SignUp = ({ setShowSignUp, isSignUp }) => {
             height: "50px",
             width: "50px",
           }}
-          alt="Brave Date Logo"
-          src="./sign-up-logo.png"
+          alt="Liebena logo"
+          src="/liebena-logo.png"
         />
         <Box
           sx={{

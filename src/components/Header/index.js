@@ -4,12 +4,7 @@ import Link from "@mui/material/Link";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
-import {
-  languagePicker,
-  languagePickerDark,
-  tinderLogoColored,
-  tinderLogo,
-} from "../../icons";
+import { languagePicker, languagePickerDark } from "../../icons";
 
 const Header = ({ landing, showSignUp, setShowSignUp, setIsSignUp }) => {
   const displaySignUp = () => {
@@ -21,11 +16,11 @@ const Header = ({ landing, showSignUp, setShowSignUp, setIsSignUp }) => {
     <Box className="header-div">
       <Box className="brave-date-logo-nav-div">
         <Box className="brave-date-nav-div">
-          <Link className="brave-date-logo-a" href="#">
-            {landing ? tinderLogo() : tinderLogoColored()}
+          <Link className="brave-date-logo-a" href="#" aria-label="Liebena home">
+            <Box component="img" src="/liebena-logo.png" alt="Liebena" className="liebena-logo" />
           </Link>
           <Box component="span" className="Hidden">
-            Brave Date
+            Liebena
           </Box>
           {landing ? (
             <List className="nav-ul">
