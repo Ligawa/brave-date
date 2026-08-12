@@ -54,12 +54,12 @@ export const initiateChatSocket = (sender, receiver) => {
     if (authToken) supabase.realtime.setAuth(authToken);
 
     chatChannel = supabase
-      .channel(`dating-messages:${conversationKey}`, {
+      .channel(`liebena-messages:${conversationKey}`, {
         config: { broadcast: { self: false }, presence: { key: sender.id } },
       })
       .on(
         "postgres_changes",
-        { event: "INSERT", schema: "public", table: "dating_messages" },
+        { event: "INSERT", schema: "public", table: "liebena_messages" },
         ({ new: message }) => {
           const belongsToConversation =
             (message.sender_id === sender.id && message.receiver_id === receiver.id) ||
@@ -68,7 +68,7 @@ export const initiateChatSocket = (sender, receiver) => {
           if (!belongsToConversation) return;
 
           const normalized = normalizeMessage(message, sender.id);
-          if (normalized.message_type === "media") {
+          if (normalized.message_type === "image" || normalized.message_type === "file") {
             dispatch(receiveMediaMessage(normalized));
           } else if (normalized.type === "received") {
             dispatch(receiveNewChatMessage(normalized));
