@@ -14,7 +14,7 @@ async function userFor(req) {
   return data.user
 }
 function json(res, status, body) { res.status(status).json({ status_code: status, ...body }) }
-function body(req) { return new Promise((resolve, reject) => { let raw=''; req.on('data', c => raw += c); req.on('end', () => { try { resolve(raw ? JSON.parse(raw) : {}) } catch { reject(new Error('INVALID_JSON')) } }) }) }
+function body(req) { return new Promise((resolve, reject) => { let raw = ''; req.on('data', c => raw += c); req.on('end', () => { try { const contentType = String(req.headers['content-type'] || '').toLowerCase(); if (contentType.includes('application/x-www-form-urlencoded')) return resolve(Object.fromEntries(new URLSearchParams(raw))); resolve(raw ? JSON.parse(raw) : {}); } catch { reject(new Error('INVALID_JSON')) } }) }) }
 function path(req) { return new URL(req.url, `https://${req.headers.host || 'localhost'}`).pathname.replace(/^\/api\/?/, '') }
 function profileShape(row) { return { ...row, profile_picture: row.profile_picture || null } }
 
@@ -24,6 +24,11 @@ async function register(req, res) {
   if (!email || password.length < 6) return json(res, 400, { message: 'Email and password are required.' })
   const { data, error } = await client(req).auth.signUp({ email, password, options: { data: { first_name: input.first_name || null, last_name: input.last_name || null } } })
   if (error) return json(res, 400, { message: error.message })
+  if (data.session?.access_token && data.user) {
+    const authenticatedClient = createClient(supabaseUrl, supabaseKey, { global: { headers: { Authorization: `Bearer ${data.session.access_token}` } } })
+    const { error: profileError } = await authenticatedClient.from('liebena_profiles').upsert({ id: data.user.id, email, first_name: input.first_name || null, last_name: input.last_name || null, passion: input.passion || null, birth_date: input.birthday || input.birth_date || null, gender: input.gender || null, interested_in: input.interests || null, display_gender: Boolean(Number(input.display_gender)) }).select().single()
+    if (profileError) return json(res, 400, { message: profileError.message })
+  }
   return json(res, 201, { token: { access_token: data.session?.access_token || '' }, user: data.user })
 }
 async function login(req, res) {
@@ -34,7 +39,7 @@ async function login(req, res) {
 async function profile(req, res) {
   const user = await userFor(req); const supabase = client(req)
   if (req.method === 'GET') { const { data, error } = await supabase.from('liebena_profiles').select('*').eq('id', user.id).single(); if (error) return json(res, 404, { message: 'Profile not found.' }); return json(res, 200, { user: profileShape(data) }) }
-  const input = await body(req); const { data, error } = await supabase.from('liebena_profiles').upsert({ id: user.id, email: user.email, first_name: input.first_name, last_name: input.last_name, passion: input.passion, phone_number: input.phone_number, birth_date: input.birth_date, gender: input.gender, bio: input.bio, updated_at: new Date().toISOString() }).select().single(); if (error) return json(res, 400, { message: error.message }); return json(res, 200, { user: profileShape(data), message: 'Profile updated.' })
+  const input = await body(req); const { data, error } = await supabase.from('liebena_profiles').upsert({ id: user.id, email: user.email, first_name: input.first_name, last_name: input.last_name, passion: input.passion, phone_number: input.phone_number, birth_date: input.birth_date || input.birthday, gender: input.gender, interested_in: input.interests, display_gender: Boolean(Number(input.display_gender)), bio: input.bio, updated_at: new Date().toISOString() }).select().single(); if (error) return json(res, 400, { message: error.message }); return json(res, 200, { user: profileShape(data), message: 'Profile updated.' })
 }
 async function users(req, res) { const user = await userFor(req); const { data, error } = await client(req).from('liebena_profiles').select('*').neq('id', user.id).order('created_at', { ascending: false }); if (error) return json(res, 400, { message: error.message }); json(res, 200, { result: data.map(profileShape) }) }
 async function matches(req, res) { const user = await userFor(req); const supabase = client(req); if (req.method === 'POST') { const input = await body(req); const { data: target } = await supabase.from('liebena_profiles').select('id').eq('email', input.match).single(); if (!target) return json(res, 404, { message: 'User not found.' }); const { error } = await supabase.from('liebena_matches').upsert([{ user_id: user.id, matched_user_id: target.id }, { user_id: target.id, matched_user_id: user.id }], { onConflict: 'user_id,matched_user_id' }); if (error) return json(res, 400, { message: error.message }); return json(res, 201, { message: 'Match created.' }) } const { data, error } = await supabase.from('liebena_matches').select('matched_user_id, liebena_profiles:matched_user_id(*)').eq('user_id', user.id); if (error) return json(res, 400, { message: error.message }); json(res, 200, { result: (data || []).map(x => profileShape(x.liebena_profiles)) }) }
