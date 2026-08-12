@@ -33,7 +33,8 @@ export const JWTAuth = {
           .then(({ data }) => {
             if (data.status_code === 201) {
               if (!data.token?.access_token) {
-                dispatch(fetchError("Your account was created. Please confirm your email, then sign in to continue."));
+                dispatch(fetchSuccess("Your account was created. Check your email to confirm your account."));
+                navigate("/app/signup-success", { state: { email } });
                 return;
               }
               localStorage.setItem("token", data.token.access_token);

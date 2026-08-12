@@ -14,6 +14,7 @@ const App = () => {
   const OnBoarding = lazy(() => import("./pages/OnBoarding"));
   const Recognition = lazy(() => import("./pages/Recognition"));
   const PageNotFound = lazy(() => import("./pages/PageNotFound"));
+  const SignupSuccess = lazy(() => import("./pages/SignupSuccess"));
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -63,6 +64,7 @@ const App = () => {
             )
           }
         />
+        <Route exact path="/app/signup-success" element={<SignupSuccess />} />
         <Route
           exact
           path="/app/recs"
