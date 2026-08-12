@@ -1,13 +1,11 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { tinderMessagesLogo } from "../../../icons";
-
 const NoMessageRecordsFound = ({ content, ...restProps }) => {
   return (
     <Box p={4} className="no-records-root" {...restProps}>
       <Box className="no-records-root-inner" {...restProps}>
-        {tinderMessagesLogo()}
+        <Box component="img" src="/liebena-logo.png" alt="Liebena" className="liebena-message-logo" />
         <Box>
           <Typography
             variant="h6"

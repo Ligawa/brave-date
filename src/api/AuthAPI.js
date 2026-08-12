@@ -32,6 +32,11 @@ export const JWTAuth = {
           )
           .then(({ data }) => {
             if (data.status_code === 201) {
+              if (!data.token?.access_token) {
+                dispatch(fetchSuccess("Your account was created. Check your email to confirm your account."));
+                navigate("/app/signup-success", { state: { email } });
+                return;
+              }
               localStorage.setItem("token", data.token.access_token);
               axJson.defaults.headers.common["Authorization"] =
                 "Bearer " + data.token.access_token;
@@ -43,7 +48,7 @@ export const JWTAuth = {
             }
           })
           .catch(function (error) {
-            dispatch(fetchError(error));
+            dispatch(fetchError(error.response?.data?.message || "Unable to create your account. Please try again."));
           });
       } catch (error) {
         dispatch(fetchError(error));
@@ -57,9 +62,7 @@ export const JWTAuth = {
         axUrlEncoded
           .post(
             `${Server.endpoint}/auth/login`,
-            JSON.stringify(
-              `grant_type=&username=${email}&password=${password}&scope=&client_id=&client_secret=`
-            )
+            { username: email, password }
           )
           .then(({ data }) => {
             if (data.access_token) {
@@ -83,9 +86,9 @@ export const JWTAuth = {
               dispatch(fetchError(data.message));
             }
           })
-          .catch(function (error) {
-            dispatch(fetchError(""));
-          });
+.catch(function (error) {
+              dispatch(fetchError(error.response?.data?.message || "Unable to sign in. Please try again."));
+            });
       } catch (error) {
         dispatch(fetchError(""));
       }

@@ -4,12 +4,11 @@ import {
   fetchSuccess,
 } from "../redux/commonReducer/actions";
 import { setCurrentUser } from "../redux/authReducer/actions";
-import { axiosJson, axiosFiles } from "./AxiosConfig";
+import { axiosJson } from "./AxiosConfig";
 
 import { Server } from "../utils";
 import { JWTAuth } from "./AuthAPI";
 
-var axFiles = axiosFiles();
 var axJson = axiosJson();
 
 export const resetPassword = (
@@ -49,7 +48,7 @@ export const resetPassword = (
 };
 
 export const SetPersonalInfo = (
-  { firstName, lastName, passion, phoneNumber },
+  { firstName, lastName, passion, phoneNumber, flightMode },
   onCloseDialog
 ) => {
   return (dispatch) => {
@@ -65,6 +64,7 @@ export const SetPersonalInfo = (
             last_name: lastName,
             passion: passion,
             phone_number: phoneNumber,
+            flight_mode: flightMode,
           })
         )
         .then(({ data }) => {
@@ -75,6 +75,7 @@ export const SetPersonalInfo = (
             user.last_name = lastName;
             user.passion = passion;
             user.phone_number = phoneNumber;
+            user.flight_mode = flightMode;
             dispatch(setCurrentUser(user));
             dispatch(onCloseDialog());
             dispatch(
@@ -97,14 +98,19 @@ export const SetPersonalInfo = (
 
 export const uploadProfilePicture = (image) => {
   return (dispatch) => {
-    const formData = new FormData();
-    formData.append("file", image);
     dispatch(fetchStart());
     const token = localStorage.getItem("token");
-    if (token) {
-      axFiles.defaults.headers.common["Authorization"] = "Bearer " + token;
-      axFiles
-        .put(`${Server.endpoint}/user/profile-image`, formData)
+    if (!token || !image) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = String(reader.result || "").split(",")[1];
+      axJson.defaults.headers.common["Authorization"] = "Bearer " + token;
+      axJson
+        .post(`${Server.endpoint}/user/profile-image`, {
+          base64,
+          content_type: image.type,
+          size_bytes: image.size,
+        })
         .then(({ data }) => {
           if (data.status_code === 200) {
             dispatch(JWTAuth.getAuthUser(true, null, data.message));
@@ -112,9 +118,9 @@ export const uploadProfilePicture = (image) => {
             dispatch(fetchError(data.message));
           }
         })
-        .catch(function (error) {
-          dispatch(fetchError(""));
-        });
-    }
+        .catch(() => dispatch(fetchError("")));
+    };
+    reader.onerror = () => dispatch(fetchError(""));
+    reader.readAsDataURL(image);
   };
 };

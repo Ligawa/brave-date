@@ -114,11 +114,44 @@ const OnBoarding = () => {
     interests: "woman",
     profile_picture: "",
     passion: "",
+    latitude: null,
+    longitude: null,
   });
+  const [locationStatus, setLocationStatus] = useState("requesting");
+  const [locationError, setLocationError] = useState("");
+
+  const requestLocation = () => {
+    if (!navigator.geolocation) {
+      setLocationStatus("error");
+      setLocationError("Your browser does not support location access.");
+      return;
+    }
+    setLocationStatus("requesting");
+    setLocationError("");
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        setPersonelInfo((prev) => ({ ...prev, latitude: coords.latitude, longitude: coords.longitude }));
+        setLocationStatus("ready");
+      },
+      () => {
+        setLocationStatus("error");
+        setLocationError("Location access is required to discover nearby matches.");
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 300000 }
+    );
+  };
+
+  useEffect(() => {
+    requestLocation();
+  }, []);
 
   const handleSubmit = async (e) => {
     const userInfo = location.state;
     e.preventDefault();
+    if (locationStatus !== "ready") {
+      setLocationError("Please allow location access before creating your account.");
+      return;
+    }
     dispatch(
       JWTAuth.onRegister({
         personelInfo: {
@@ -324,7 +357,7 @@ const OnBoarding = () => {
                 >
                   Gender
                 </FormLabel>
-                <RadioGroup row name="position" defaultValue="top">
+                <RadioGroup row name="gender" value={personelInfo.gender} onChange={handleChange}>
                   <FormControlLabel
                     id="man-gender-identity"
                     name="gender"
@@ -344,7 +377,7 @@ const OnBoarding = () => {
                     }}
                     onChange={handleChange}
                     checked={personelInfo.gender === "man"}
-                    control={<Radio sx={{ display: "none" }} />}
+                    control={<Radio sx={{ color: "#d6002f", "&.Mui-checked": { color: "#d6002f" } }} />}
                     label="Man"
                     labelPlacement="end"
                   />
@@ -367,7 +400,7 @@ const OnBoarding = () => {
                       },
                     }}
                     checked={personelInfo.gender === "woman"}
-                    control={<Radio sx={{ display: "none" }} />}
+                    control={<Radio sx={{ color: "#d6002f", "&.Mui-checked": { color: "#d6002f" } }} />}
                     label="Woman"
                     labelPlacement="end"
                   />
@@ -389,8 +422,8 @@ const OnBoarding = () => {
                         border: "solid 1px #d6002f",
                       },
                     }}
-                    checked={personelInfo.gender === "other"}
-                    control={<Radio sx={{ display: "none" }} />}
+                    checked={personelInfo.gender === "more"}
+                    control={<Radio sx={{ color: "#d6002f", "&.Mui-checked": { color: "#d6002f" } }} />}
                     label="Other"
                     labelPlacement="end"
                   />
@@ -435,14 +468,14 @@ const OnBoarding = () => {
                 >
                   Show Me
                 </FormLabel>
-                <RadioGroup row name="position" defaultValue="top">
+                <RadioGroup row name="interests" value={personelInfo.interests} onChange={handleChange}>
                   <FormControlLabel
                     id="man-gender-interests"
                     name="interests"
                     value="man"
                     onChange={handleChange}
                     checked={personelInfo.interests === "man"}
-                    control={<Radio sx={{ display: "none" }} />}
+                    control={<Radio sx={{ color: "#d6002f", "&.Mui-checked": { color: "#d6002f" } }} />}
                     label="Man"
                     labelPlacement="end"
                     sx={{
@@ -465,7 +498,7 @@ const OnBoarding = () => {
                     value="woman"
                     onChange={handleChange}
                     checked={personelInfo.interests === "woman"}
-                    control={<Radio sx={{ display: "none" }} />}
+                    control={<Radio sx={{ color: "#d6002f", "&.Mui-checked": { color: "#d6002f" } }} />}
                     label="Woman"
                     labelPlacement="end"
                     sx={{
@@ -489,7 +522,7 @@ const OnBoarding = () => {
                     value="everyone"
                     onChange={handleChange}
                     checked={personelInfo.interests === "everyone"}
-                    control={<Radio sx={{ display: "none" }} />}
+                    control={<Radio sx={{ color: "#d6002f", "&.Mui-checked": { color: "#d6002f" } }} />}
                     label="Everyone"
                     labelPlacement="end"
                     sx={{
@@ -590,12 +623,11 @@ const OnBoarding = () => {
                 }}
               />
 
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
+              <Box sx={{ display: "flex", flexDirection: "column", gap: "8px", alignItems: "center", justifyContent: "center" }}>
+                <Typography variant="body2" sx={{ textAlign: "center", color: locationStatus === "ready" ? "#2e7d32" : "#d6002f" }}>
+                  {locationStatus === "ready" ? "Location enabled for nearby discovery" : locationError || "Allow location access to continue"}
+                </Typography>
+                {locationStatus === "error" && <Button type="button" onClick={requestLocation}>Try location again</Button>}
                 <Button
                   type="submit"
                   sx={{
@@ -615,7 +647,8 @@ const OnBoarding = () => {
                     !personelInfo.first_name ||
                     !personelInfo.birthday ||
                     !personelInfo.profile_picture ||
-                    !personelInfo.passion
+                    !personelInfo.passion ||
+                    locationStatus !== "ready"
                   }
                 >
                   Continue

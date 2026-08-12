@@ -13,6 +13,13 @@ import { Server } from "../utils";
 
 var axJson = axiosJson();
 
+export const updateLocation = (latitude, longitude) => (dispatch) => {
+  axJson.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("token");
+  return axJson.put(`${Server.endpoint}/user/location`, { latitude, longitude }).then(({ data }) => {
+    if (data.status_code !== 200) dispatch(fetchError(data.message));
+  }).catch(() => dispatch(fetchError("Unable to update your location.")));
+};
+
 export const getUserMatches = () => {
   return (dispatch) => {
     dispatch(fetchStart());
@@ -39,7 +46,7 @@ export const getUserMatches = () => {
   };
 };
 
-export const setInitialUsers = () => {
+export const setInitialUsers = (filters = {}) => {
   return (dispatch) => {
     dispatch(fetchStart());
     const user = localStorage.getItem("user");
@@ -48,7 +55,7 @@ export const setInitialUsers = () => {
         "Bearer " + localStorage.getItem("token");
       axJson
         .get(`${Server.endpoint}/user/all`, {
-          params: { user: user.email },
+          params: { user: user.email, ...filters },
         })
         .then(({ data }) => {
           if (data.status_code === 200) {
@@ -65,13 +72,13 @@ export const setInitialUsers = () => {
   };
 };
 
-export const setSelectedMatch = (user) => {
+export const setSelectedMatch = (user, direction = "like") => {
   return (dispatch) => {
     dispatch(fetchStart());
     axJson.defaults.headers.common["Authorization"] =
       "Bearer " + localStorage.getItem("token");
     axJson
-      .post(`${Server.endpoint}/matches`, { match: user.email })
+      .post(`${Server.endpoint}/swipes`, { target_id: user.id, target_email: user.email, direction })
       .then(({ data }) => {
         if (data.status_code === 201) {
           dispatch(fetchSuccess());

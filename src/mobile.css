@@ -1,0 +1,56 @@
+/* Mobile-first interaction and layout defaults */
+@media screen and (max-width: 600px) {
+  body { overflow-x: hidden; }
+  .landing-page { min-height: 100svh; height: auto; margin-bottom: 0; justify-content: flex-start; align-items: stretch; }
+  .header-div { position: relative; top: 0; z-index: 10; flex: 0 0 auto; align-self: stretch; height: calc(72px + env(safe-area-inset-top)); padding-top: env(safe-area-inset-top); }
+  .brave-date-logo-nav-div { height: 72px; min-height: 72px; }
+  .brave-date-nav-div { flex: 1 1 auto; min-width: 0; height: 56px; margin: 0 12px; }
+  .brave-date-logo-a { display: flex; align-items: center; flex: 0 1 auto; width: auto; max-width: 170px; min-width: 0; }
+  .liebena-logo { width: 132px; max-width: 100%; height: auto; max-height: 52px; object-fit: contain; object-position: left center; }
+  .brave-date-nav-div .language-login-div { flex: 0 0 auto; gap: 4px; margin-left: auto; }
+  .login-button { min-height: 44px; padding-inline: 8px; }
+  .login-button-a { max-width: 112px; }
+  .login-button-a { min-height: 44px; padding-inline: 18px; font-size: 1rem; }
+  .nav-ul { display: none; }
+  .MuiDialog-paper { width: calc(100% - 24px) !important; max-width: none !important; margin: 12px !important; max-height: calc(100svh - 24px); }
+  .MuiDialogContent-root { padding: 20px 16px !important; }
+  .MuiButton-root, button, [role="button"] { min-height: 44px; }
+  input, textarea, select { font-size: 16px !important; }
+  .perfect-scroll-bar-root { height: auto; min-height: 100svh; }
+  .chat-cell-item, .room-cell-item { padding: 12px; }
+  .side-bar-root { width: 100% !important; min-width: 0 !important; max-width: none !important; }
+  .side-bar-header-root { padding-inline: 12px; }
+  .cards-container-root { width: 100% !important; padding: 12px !important; }
+  .card-root { width: min(100%, 360px) !important; margin-inline: auto !important; }
+  .onboarding-root, .onboarding-container { width: 100% !important; min-width: 0 !important; padding-inline: 16px !important; }
+  .onboarding-root .MuiGrid-container { margin: 0 !important; width: 100% !important; }
+  .onboarding-root .MuiGrid-item { padding: 8px 0 !important; }
+  .onboarding-root .MuiFormControlLabel-root { margin-inline: 0 8px; }
+  .onboarding-root .MuiFormGroup-root, .onboarding-root .MuiRadioGroup-root { flex-wrap: wrap; gap: 4px; }
+  .onboarding-root .MuiButton-root { width: 100%; }
+  .upload-root, .profile-upload-root { width: 100% !important; min-height: 180px !important; }
+  .MuiSnackbar-root { left: 12px !important; right: 12px !important; bottom: calc(12px + env(safe-area-inset-bottom)) !important; }
+  .MuiSnackbar-root .MuiAlert-root { width: 100%; }
+  .MuiBottomNavigation-root { padding-bottom: env(safe-area-inset-bottom); }
+  .MuiIconButton-root { min-width: 44px; min-height: 44px; }
+  .mobile-bottom-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 1200; display: flex; justify-content: space-around; padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); background: #fff; border-top: 1px solid rgba(0,0,0,.08); box-shadow: 0 -6px 24px rgba(55,24,33,.08); }
+  .mobile-bottom-nav .MuiIconButton-root { display: flex; flex-direction: column; gap: 2px; flex: 1; border-radius: 12px; color: #8a7880; }
+  .mobile-bottom-nav .MuiIconButton-root.is-active { color: #d6002f; background: #fff0f3; }
+  .mobile-bottom-nav span { font-size: 10px; font-weight: 700; line-height: 1; }
+  .mobile-discovery-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px 4px; }
+  .mobile-discovery-actions { display: flex; align-items: center; gap: 4px; overflow-x: auto; }
+  .mobile-discovery-actions button { min-height: 34px; border: 0; border-radius: 999px; padding: 0 9px; background: #fff4f6; color: #8d2740; white-space: nowrap; font-size: 11px; font-weight: 700; }
+  .mobile-discovery-actions button.is-active { background: #d6002f; color: #fff; }
+  .mobile-discovery-actions .boost-trigger { display: grid; place-items: center; padding: 0 7px; color: #d6002f; }
+  .boost-overlay { position: fixed; inset: 0; z-index: 1300; display: grid; place-items: center; padding: 20px; background: rgba(39, 19, 27, .38); }
+  .boost-panel { width: min(100%, 360px); display: flex; flex-direction: column; gap: 12px; padding: 24px; border-radius: 24px; background: #fff; }
+  .explore-panel { padding: 18px 16px 110px; }
+  .explore-groups { display: grid; gap: 10px; margin-top: 16px; }
+  .explore-group { display: grid; gap: 4px; padding: 16px; border-radius: 18px; background: #fff; box-shadow: 0 4px 18px rgba(55,24,33,.08); }
+  .explore-group .MuiChip-root { justify-self: start; margin-top: 4px; }
+  .in-build-app-container { padding-bottom: 82px; }
+}
+
+@media screen and (min-width: 601px) and (max-width: 960px) {
+  .brave-date-nav-div { margin-inline: 20px; }
+}
