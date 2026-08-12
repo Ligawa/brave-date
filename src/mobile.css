@@ -33,6 +33,22 @@
   .MuiSnackbar-root .MuiAlert-root { width: 100%; }
   .MuiBottomNavigation-root { padding-bottom: env(safe-area-inset-bottom); }
   .MuiIconButton-root { min-width: 44px; min-height: 44px; }
+  .mobile-bottom-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 1200; display: flex; justify-content: space-around; padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); background: #fff; border-top: 1px solid rgba(0,0,0,.08); box-shadow: 0 -6px 24px rgba(55,24,33,.08); }
+  .mobile-bottom-nav .MuiIconButton-root { display: flex; flex-direction: column; gap: 2px; flex: 1; border-radius: 12px; color: #8a7880; }
+  .mobile-bottom-nav .MuiIconButton-root.is-active { color: #d6002f; background: #fff0f3; }
+  .mobile-bottom-nav span { font-size: 10px; font-weight: 700; line-height: 1; }
+  .mobile-discovery-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px 4px; }
+  .mobile-discovery-actions { display: flex; align-items: center; gap: 4px; overflow-x: auto; }
+  .mobile-discovery-actions button { min-height: 34px; border: 0; border-radius: 999px; padding: 0 9px; background: #fff4f6; color: #8d2740; white-space: nowrap; font-size: 11px; font-weight: 700; }
+  .mobile-discovery-actions button.is-active { background: #d6002f; color: #fff; }
+  .mobile-discovery-actions .boost-trigger { display: grid; place-items: center; padding: 0 7px; color: #d6002f; }
+  .boost-overlay { position: fixed; inset: 0; z-index: 1300; display: grid; place-items: center; padding: 20px; background: rgba(39, 19, 27, .38); }
+  .boost-panel { width: min(100%, 360px); display: flex; flex-direction: column; gap: 12px; padding: 24px; border-radius: 24px; background: #fff; }
+  .explore-panel { padding: 18px 16px 110px; }
+  .explore-groups { display: grid; gap: 10px; margin-top: 16px; }
+  .explore-group { display: grid; gap: 4px; padding: 16px; border-radius: 18px; background: #fff; box-shadow: 0 4px 18px rgba(55,24,33,.08); }
+  .explore-group .MuiChip-root { justify-self: start; margin-top: 4px; }
+  .in-build-app-container { padding-bottom: 82px; }
 }
 
 @media screen and (min-width: 601px) and (max-width: 960px) {
