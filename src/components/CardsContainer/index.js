@@ -13,7 +13,6 @@ import moment from "moment";
 
 const CardsContainer = () => {
   const dispatch = useDispatch();
-  const todayDate = moment.utc().format("DD-MM-YYYY");
   const db = useSelector(users);
   const [currentIndex, setCurrentIndex] = useState(db.length - 1);
   const [, setLastDirection] = useState();
@@ -98,7 +97,7 @@ const CardsContainer = () => {
                   }}
                 >
                   {character.first_name}{" "}
-                  {todayDate.split("-")[2] - character.birthday.split("-")[2]}
+                  {character.birthday ? moment().diff(moment(character.birthday), "years") : ""}
                 </Box>
                 {currentDirection === "left" && currentIndex === index - 1 ? (
                   <Box

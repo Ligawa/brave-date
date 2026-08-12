@@ -16,7 +16,7 @@ async function userFor(req) {
 function json(res, status, body) { res.status(status).json({ status_code: status, ...body }) }
 function body(req) { return new Promise((resolve, reject) => { let raw = ''; req.on('data', c => raw += c); req.on('end', () => { try { const contentType = String(req.headers['content-type'] || '').toLowerCase(); if (contentType.includes('application/x-www-form-urlencoded')) return resolve(Object.fromEntries(new URLSearchParams(raw))); resolve(raw ? JSON.parse(raw) : {}); } catch { reject(new Error('INVALID_JSON')) } }) }) }
 function path(req) { return new URL(req.url, `https://${req.headers.host || 'localhost'}`).pathname.replace(/^\/api\/?/, '') }
-function profileShape(row) { return { ...row, profile_picture: row.profile_picture || null } }
+function profileShape(row) { return { ...row, birthday: row.birthday || row.birth_date || null, birth_date: row.birth_date || row.birthday || null, profile_picture: row.profile_picture || null, first_name: row.first_name || 'Liebena member' } }
 
 async function register(req, res) {
   const input = await body(req)
