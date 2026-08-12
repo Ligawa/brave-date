@@ -8,6 +8,13 @@ html {
   width: 100%;
 }
 
+html,
+body,
+#root {
+  min-width: 320px;
+  min-height: 100%;
+}
+
 body {
   text-rendering: optimizeLegibility;
   word-wrap: break-word;

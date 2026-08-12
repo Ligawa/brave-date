@@ -1,0 +1,38 @@
+/* Mobile-first interaction and layout defaults */
+@media screen and (max-width: 600px) {
+  body { overflow-x: hidden; }
+  .landing-page { min-height: 100svh; height: auto; margin-bottom: 0; }
+  .header-div { height: 72px; padding-top: env(safe-area-inset-top); }
+  .brave-date-nav-div { margin: 0 16px; }
+  .brave-date-logo-a { width: 116px; }
+  .liebena-logo { width: 92px; height: 44px; }
+  .brave-date-nav-div .language-login-div { gap: 8px; }
+  .login-button { min-height: 44px; padding-inline: 18px; }
+  .login-button-a { min-height: 44px; padding-inline: 18px; font-size: 1rem; }
+  .nav-ul { display: none; }
+  .MuiDialog-paper { width: calc(100% - 24px) !important; max-width: none !important; margin: 12px !important; max-height: calc(100svh - 24px); }
+  .MuiDialogContent-root { padding: 20px 16px !important; }
+  .MuiButton-root, button, [role="button"] { min-height: 44px; }
+  input, textarea, select { font-size: 16px !important; }
+  .perfect-scroll-bar-root { height: auto; min-height: 100svh; }
+  .chat-cell-item, .room-cell-item { padding: 12px; }
+  .side-bar-root { width: 100% !important; min-width: 0 !important; max-width: none !important; }
+  .side-bar-header-root { padding-inline: 12px; }
+  .cards-container-root { width: 100% !important; padding: 12px !important; }
+  .card-root { width: min(100%, 360px) !important; margin-inline: auto !important; }
+  .onboarding-root, .onboarding-container { width: 100% !important; min-width: 0 !important; padding-inline: 16px !important; }
+  .onboarding-root .MuiGrid-container { margin: 0 !important; width: 100% !important; }
+  .onboarding-root .MuiGrid-item { padding: 8px 0 !important; }
+  .onboarding-root .MuiFormControlLabel-root { margin-inline: 0 8px; }
+  .onboarding-root .MuiFormGroup-root, .onboarding-root .MuiRadioGroup-root { flex-wrap: wrap; gap: 4px; }
+  .onboarding-root .MuiButton-root { width: 100%; }
+  .upload-root, .profile-upload-root { width: 100% !important; min-height: 180px !important; }
+  .MuiSnackbar-root { left: 12px !important; right: 12px !important; bottom: calc(12px + env(safe-area-inset-bottom)) !important; }
+  .MuiSnackbar-root .MuiAlert-root { width: 100%; }
+  .MuiBottomNavigation-root { padding-bottom: env(safe-area-inset-bottom); }
+  .MuiIconButton-root { min-width: 44px; min-height: 44px; }
+}
+
+@media screen and (min-width: 601px) and (max-width: 960px) {
+  .brave-date-nav-div { margin-inline: 20px; }
+}
